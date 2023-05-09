@@ -27,4 +27,4 @@ if __name__ == "__main__":
 
         print('IPs:')
         for ip in result:
-            print(str(ip["_id"]) + ": " + str(ip["total_count"]))
+            print('\t' + str(ip["_id"]) + ": " + str(ip["total_count"]))
