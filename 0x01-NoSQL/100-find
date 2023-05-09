@@ -1,0 +1,2 @@
+// Script that lists all documents filtered by starting string
+db.school.find({name: /^Holberton/})
