@@ -48,6 +48,26 @@ def call_history(method: Callable) -> Callable:
     return wrapper
 
 
+def replay(method: Callable):
+    '''
+    Function that displays the history of calls of a particular function
+    '''
+    key = method.__qualname__
+    cache = method.__self__
+
+    input__list_keys = key + ":inputs"
+    output__list_keys = key + ":outputs"
+
+    inputs = cache._redis.lrange(input__list_keys, 0, -1)
+    outputs = cache._redis.lrange(output__list_keys, 0, -1)
+
+    count = cache._redis.llen(input__list_keys)
+    print(f'{key} was called {count} times:')
+
+    for input, output in zip(inputs, outputs):
+        print(f'{key}(*{input.decode("utf8")}) -> {output.decode("utf-8")}')
+
+
 class Cache:
     '''
     Cache class that stores an instance of reddit client
